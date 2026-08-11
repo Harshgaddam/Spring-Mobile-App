@@ -1,11 +1,17 @@
 package com.mobileapp.mobileapp.ui.controller;
 
+import com.mobileapp.mobileapp.service.UserService;
+import com.mobileapp.mobileapp.shared.dto.UserDto;
 import com.mobileapp.mobileapp.ui.model.response.UserRest;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("users") // http://localhost:8080/users
 public class UserController {
+
+    @Autowired
+    UserService UserService;
+
     @GetMapping
     public String getUser() {
         return "getUser was called";
@@ -13,7 +19,15 @@ public class UserController {
 
     @PostMapping
     public UserRest createUser(@RequestBody userDetailsRequestModel userDetails) {
-        return null;
+        UserRest returnValue = new UserRest();
+
+        UserDto userDto = new UserDto();
+        BeanUtils.copyProperties(userDetails, userDto);
+
+        UserDto createdUser = UserService.createUser(userDto);
+        BeanUtils.copyProperties(createdUser, returnValue);
+
+        return returnValue;
     }
 
     @PutMapping

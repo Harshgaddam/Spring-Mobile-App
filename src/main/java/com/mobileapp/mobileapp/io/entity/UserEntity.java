@@ -1,8 +1,10 @@
 package com.mobileapp.mobileapp.io.entity;
 
-import javax.annotation.processing.Generated;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
 import java.io.Serializable;
-import javax.persistence.Entity;
 
 @Entity
 public class UserEntity implements Serializable {
@@ -30,8 +32,8 @@ public class UserEntity implements Serializable {
     @Column(nullable = false)
     private String emailVerificationToken;
 
-    @Colum(nullable = false, columnDefinition = "boolean default false")
-    private Boolean emailVerificationStatus;
+    @Column(nullable = false)
+    private Boolean emailVerificationStatus = false;
 
     public String getUserId() {
         return userId;

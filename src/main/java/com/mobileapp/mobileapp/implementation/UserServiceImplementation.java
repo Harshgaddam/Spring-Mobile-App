@@ -4,6 +4,7 @@ import com.mobileapp.mobileapp.UserRepository;
 import com.mobileapp.mobileapp.io.entity.UserEntity;
 import com.mobileapp.mobileapp.service.UserService;
 import com.mobileapp.mobileapp.shared.dto.UserDto;
+import com.mobileapp.mobileapp.shared.dto.Utils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,9 @@ public class UserServiceImplementation implements UserService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    Utils utils;
 
     @Override
     public UserDto createUser(UserDto user) {
@@ -24,9 +28,9 @@ public class UserServiceImplementation implements UserService {
         UserEntity userEntity = new UserEntity();
         BeanUtils.copyProperties(user, userEntity);
 
-        userEntity.setEncryptedPassword("TSET");
+        String publicUserId = utils.generateUserId(30);
+        userEntity.setEncryptedPassword(publicUserId);
         userEntity.setUserId("TEST");
-        userEntity.setEmailVerificationToken("TRUE");
 
         UserEntity storedUserDetails = userRepository.save(userEntity);
 

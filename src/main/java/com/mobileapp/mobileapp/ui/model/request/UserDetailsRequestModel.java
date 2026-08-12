@@ -6,9 +6,7 @@ public class UserDetailsRequestModel {
     private String email;
     private String password;
 
-    public String getFirstName() {
-        return firstName;
-    }
+    public String getFirstName() { return firstName; }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -30,9 +28,7 @@ public class UserDetailsRequestModel {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
-    }
+    public String getEmail() { return email; }
 
     public void setEmail(String email) {
         this.email = email;

@@ -8,7 +8,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class UserServiceImplementation implements UserService {
 
@@ -23,12 +22,13 @@ public class UserServiceImplementation implements UserService {
 
         userEntity.setEncryptedPassword("TSET");
         userEntity.setUserId("TEST");
+        userEntity.setEmailVerificationToken("TRUE");
 
         UserEntity storedUserDetails = userRepository.save(userEntity);
 
-        UserDto newUserDto = new UserDto();
-        BeanUtils.copyProperties(storedUserDetails, newUserDto);
+        UserDto returnValue = new UserDto();
+        BeanUtils.copyProperties(storedUserDetails, returnValue);
 
-        return null;
+        return returnValue;
     }
 }

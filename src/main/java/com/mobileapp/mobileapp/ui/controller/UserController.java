@@ -3,6 +3,8 @@ package com.mobileapp.mobileapp.ui.controller;
 import com.mobileapp.mobileapp.service.UserService;
 import com.mobileapp.mobileapp.shared.dto.UserDto;
 import com.mobileapp.mobileapp.ui.model.response.UserRest;
+import com.mobileapp.mobileapp.ui.model.request.UserDetailsRequestModel;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +21,7 @@ public class UserController {
     }
 
     @PostMapping
-    public UserRest createUser(@RequestBody userDetailsRequestModel userDetails) {
+    public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) {
         UserRest returnValue = new UserRest();
 
         UserDto userDto = new UserDto();

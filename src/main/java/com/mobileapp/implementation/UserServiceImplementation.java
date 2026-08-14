@@ -1,12 +1,13 @@
-package com.mobileapp.mobileapp.implementation;
+package com.mobileapp.implementation;
 
-import com.mobileapp.mobileapp.UserRepository;
-import com.mobileapp.mobileapp.io.entity.UserEntity;
-import com.mobileapp.mobileapp.service.UserService;
-import com.mobileapp.mobileapp.shared.dto.UserDto;
-import com.mobileapp.mobileapp.shared.dto.Utils;
+import com.mobileapp.UserRepository;
+import com.mobileapp.io.entity.UserEntity;
+import com.mobileapp.service.UserService;
+import com.mobileapp.shared.dto.UserDto;
+import com.mobileapp.shared.dto.Utils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,6 +18,9 @@ public class UserServiceImplementation implements UserService {
 
     @Autowired
     Utils utils;
+
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public UserDto createUser(UserDto user) {
@@ -30,7 +34,7 @@ public class UserServiceImplementation implements UserService {
 
         String publicUserId = utils.generateUserId(30);
         userEntity.setEncryptedPassword(publicUserId);
-        userEntity.setUserId("TEST");
+        userEntity.setUserId(bCryptPasswordEncoder.encode(user.getPassword()));
 
         UserEntity storedUserDetails = userRepository.save(userEntity);
 

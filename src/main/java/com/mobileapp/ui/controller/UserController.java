@@ -1,9 +1,9 @@
-package com.mobileapp.mobileapp.ui.controller;
+package com.mobileapp.ui.controller;
 
-import com.mobileapp.mobileapp.service.UserService;
-import com.mobileapp.mobileapp.shared.dto.UserDto;
-import com.mobileapp.mobileapp.ui.model.response.UserRest;
-import com.mobileapp.mobileapp.ui.model.request.UserDetailsRequestModel;
+import com.mobileapp.service.UserService;
+import com.mobileapp.shared.dto.UserDto;
+import com.mobileapp.ui.model.response.UserRest;
+import com.mobileapp.ui.model.request.UserDetailsRequestModel;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

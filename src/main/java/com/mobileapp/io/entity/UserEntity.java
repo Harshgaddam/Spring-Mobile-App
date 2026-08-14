@@ -1,4 +1,4 @@
-package com.mobileapp.mobileapp.io.entity;
+package com.mobileapp.io.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

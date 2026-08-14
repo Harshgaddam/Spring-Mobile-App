@@ -1,4 +1,4 @@
-package com.mobileapp.mobileapp.shared.dto;
+package com.mobileapp.shared.dto;
 
 import org.springframework.stereotype.Component;
 import java.security.SecureRandom;

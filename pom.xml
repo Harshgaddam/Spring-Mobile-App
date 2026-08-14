@@ -14,8 +14,8 @@
     </parent>
 
     <!-- Project -->
-    <groupId>com.mobile-app</groupId>
-    <artifactId>mobile-app</artifactId>
+    <groupId>com.mobileapp</groupId>
+    <artifactId>mobileapp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <name>mobile-app</name>
@@ -69,6 +69,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.mobileapp.MobileApplication</mainClass>
+                </configuration>
             </plugin>
 
         </plugins>

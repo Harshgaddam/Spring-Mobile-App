@@ -10,6 +10,8 @@ import com.mobileapp.SpringApplicationContext;
 import com.mobileapp.service.UserService;
 import com.mobileapp.shared.dto.UserDto;
 import com.mobileapp.ui.model.request.UserLoginRequestModel;
+import jakarta.annotation.Nullable;
+import org.jspecify.annotations.NullMarked;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

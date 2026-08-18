@@ -7,6 +7,7 @@ import com.mobileapp.shared.dto.UserDto;
 import com.mobileapp.shared.dto.Utils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -53,16 +54,8 @@ public class UserServiceImplementation implements UserService {
         
         UserEntity userEntity = userRepository.findByEmail(username);
         
-        if (userEntity == null) {
-            throw new UsernameNotFoundException("User not found with email: " + username);
-        }
+        if (userEntity == null) throw new UsernameNotFoundException(username);
         
-        UserDetails userDetails = new org.springframework.security.core.userdetails.User(
-            userEntity.getEmail(),
-            userEntity.getEncryptedPassword(),
-            new ArrayList<>()
-        );
-        
-        return userDetails;
+        return new User(username, userEntity.getEncryptedPassword(), new ArrayList<>());
     }
 }

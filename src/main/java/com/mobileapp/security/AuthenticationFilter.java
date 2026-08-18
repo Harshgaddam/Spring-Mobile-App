@@ -36,14 +36,12 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)
-            throws AuthenticationException {
+    public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res) throws AuthenticationException {
         try {
 
             UserLoginRequestModel creds = new ObjectMapper().readValue(req.getInputStream(), UserLoginRequestModel.class);
 
-            return getAuthenticationManager().authenticate(
-                    new UsernamePasswordAuthenticationToken(creds.getEmail(), creds.getPassword(), new ArrayList<>()));
+            return getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(creds.getEmail(), creds.getPassword(), new ArrayList<>()));
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -51,21 +49,16 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
-                                            Authentication auth) throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain, Authentication auth) throws IOException, ServletException {
 
         byte[] secretKeyBytes = Base64.getEncoder().encode(SecurityConstants.TOKEN_SECRET.getBytes());
         SecretKey secretKey = new SecretKeySpec(secretKeyBytes, SignatureAlgorithm.HS512.getJcaName());
         Instant now = Instant.now();
 
         String userName = ((User) auth.getPrincipal()).getUsername();
-        String token = Jwts.builder()
-                .setSubject(userName)
-                .setExpiration(
-                        Date.from(now.plusMillis(SecurityConstants.EXPIRATION_TIME)))
-                .setIssuedAt(Date.from(now)).signWith(secretKey, SignatureAlgorithm.HS512).compact();
+        String token = Jwts.builder().setSubject(userName).setExpiration(Date.from(now.plusMillis(SecurityConstants.EXPIRATION_TIME))).setIssuedAt(Date.from(now)).signWith(secretKey, SignatureAlgorithm.HS512).compact();
 
-        UserService userService = (UserService)SpringApplicationContext.getBean("userServiceImplementation");
+        UserService userService = (UserService) SpringApplicationContext.getBean("userServiceImplementation");
         UserDto userDto = userService.getUser(userName);
         res.addHeader("UserId", userDto.getUserId());
 

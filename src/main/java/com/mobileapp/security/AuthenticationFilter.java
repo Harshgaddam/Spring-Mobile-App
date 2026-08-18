@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
 
+import com.mobileapp.SpringApplicationContext;
+import com.mobileapp.service.UserService;
+import com.mobileapp.shared.dto.UserDto;
 import com.mobileapp.ui.model.request.UserLoginRequestModel;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -59,6 +62,10 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                 .setExpiration(
                         Date.from(now.plusMillis(SecurityConstants.EXPIRATION_TIME)))
                 .setIssuedAt(Date.from(now)).signWith(secretKey, SignatureAlgorithm.HS512).compact();
+
+        UserService userService = (UserService)SpringApplicationContext.getBean("userServiceImplementation");
+        UserDto userDto = userService.getUser(userName);
+        res.addHeader("UserId", userDto.getUserId());
 
         res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
     }
